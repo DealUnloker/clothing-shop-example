@@ -5,7 +5,7 @@
             <div class="line"></div>
             <div class="line"></div>
         </div>
-        <router-link to="/main" style="text-decoration: none">
+        <router-link to="/products" style="text-decoration: none">
             <div class="title">
                 <h1>EUCLID</h1>
             </div>

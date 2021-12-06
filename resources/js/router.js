@@ -15,11 +15,11 @@ export default new VueRouter({
             component: WelcomePage
         },
         {
-            path: '/main',
+            path: '/products',
             component: MainPage
         },
         {
-            path: '/product',
+            path: '/products/:id',
             component: ProductPage
         },
         {

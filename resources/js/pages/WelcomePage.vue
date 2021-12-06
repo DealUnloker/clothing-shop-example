@@ -11,7 +11,7 @@
                 </p>
             </div>
             <div class="right">
-                <router-link to="/main">
+                <router-link to="/products">
                 <div id="parallelogram"></div>
                 </router-link>
                 <div class="centered-text">

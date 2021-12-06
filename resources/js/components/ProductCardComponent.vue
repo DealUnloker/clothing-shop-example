@@ -1,15 +1,22 @@
 <template>
-    <div class="product-card-body">
-        <div class="img">
+    <router-link :to="'/products/' + product.id">
+        <div class="product-card-body" v-on:click="scrollToTop">
+            <img v-bind:src="product.img" class="img" alt="">
+            <h3> {{ product.name }}</h3>
+            <p> {{ product.price }}</p>
         </div>
-        <h3>product name</h3>
-        <p>300$</p>
-    </div>
+    </router-link>
 </template>
 
 <script>
 export default {
-    name: "ProductCardComponent"
+    props: ['product'],
+    name: "ProductCardComponent",
+    methods: {
+        scrollToTop() {
+            window.scrollTo(0,0);
+        }
+    }
 }
 </script>
 
@@ -21,7 +28,7 @@ h3 {
     margin-top: 10px;
 }
 
-h3, p{
+h3, p {
     font-size: 24px;
 }
 

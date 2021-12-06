@@ -1,27 +1,15 @@
 <template>
     <div>
         <header-component></header-component>
-        <div class="content">
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
-            <product-card-component class="product-card"></product-card-component>
+        <div class="content" v-if="isLoaded">
+            <product-card-component v-for="product in this.products.data" v-bind:key="product.id" :product="product"
+                                    class="product-card"></product-card-component>
         </div>
         <div class="pages">
-            <p>< 1 2 3 4 5 6 ></p>
+            <pagination :data="this.products" v-if="isLoaded" @pagination-change-page="getResults" :limit="-1">
+                <img slot="prev-nav" src="/img/icons/l_arrow.png" alt="">
+                <img slot="next-nav" class="btn-nxt" src="/img/icons/r_arrow.png" alt="">
+            </pagination>
         </div>
         <footer-component></footer-component>
     </div>
@@ -38,6 +26,31 @@ export default {
         HeaderComponent,
         FooterComponent,
         ProductCardComponent
+    },
+    data() {
+        return {
+            products: null,
+            isLoaded: false
+        }
+    },
+    created() {
+        this.getResults()
+    },
+    methods: {
+        getResults(page) {
+            if (typeof page === "undefined") {
+                page = 1;
+            }
+            axios
+                .get("/api/v1/products?page=" + page)
+                .then(response => {
+                    this.products = response.data;
+                    this.isLoaded = true;
+                });
+        },
+        scrollToTop() {
+            window.scrollTo(0,0);
+        }
     }
 }
 </script>
@@ -53,11 +66,18 @@ export default {
     justify-content: space-between;
 }
 
-.pages p{
-    text-align: center;
-    font-size: 24px;
-    letter-spacing: 0.1rem;
-    margin-bottom: 50px;
+.pages {
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+
+    .page-item {
+        border: none !important;
+    }
+    .btn-nxt {
+        //margin-left: 10px !important;
+    }
+
 }
 
 </style>
