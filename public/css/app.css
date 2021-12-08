@@ -11287,12 +11287,73 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-h1, .h1, h2, .h2, h3, .h3, p {
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, p {
   font-family: "Reem Kufi", sans-serif;
+  margin-bottom: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1, .h1 {
+  font-size: 48px;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
+  color: #FF4264;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
 }
 
 body {
-  min-width: 1280px;
+  min-width: 320px;
   max-width: 2200px;
   margin: auto;
+}
+
+.auth-btn {
+  width: 245px;
+  font-size: 24px;
+  color: white;
+  height: 81px;
+  border: none;
+  background: conic-gradient(from 254.97deg at 99.13% 0.57%, rgba(255, 66, 100, 0.17) -189.75deg, #FF4264 32.04deg, rgba(255, 66, 100, 0.17) 170.25deg, #FF4264 392.04deg);
+}
+
+.buy-btn {
+  border: none;
+  background-color: black;
+  color: white;
+  width: 193px;
+  height: 66px;
+  font-size: 24px;
+  transition: all 0.3s;
+}
+.buy-btn img {
+  margin-right: 35px;
+}
+.buy-btn:hover {
+  background: #FF4264;
+}
+.buy-btn:focus {
+  background: #FF4264;
+}
+.buy-btn:focus:after {
+  content: "added";
+}
+.buy-btn:focus img {
+  display: none;
+}
+
+.size {
+  display: block;
+  color: #FFFFFF;
+  background-color: black;
+  height: 61px;
+  width: 61px;
+  margin: 5px;
 }

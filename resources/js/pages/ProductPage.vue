@@ -1,66 +1,71 @@
 <template>
     <div>
         <header-component></header-component>
-        <div class="main-info">
-            <div class="left">
-                <div class="images">
-                    <img v-bind:src="this.product.img" class="img" alt="">
-                    <img v-bind:src="this.product.img" class="img" alt="">
-                    <img v-bind:src="this.product.img" class="img" alt="">
-                    <img v-bind:src="this.product.img" class="img" alt="">
+        <main v-if="isLoaded">
+            <div class="content">
+                <div class="additional-img">
+                    <img :src="this.product.img" width="130" height="232" alt="">
+                    <img :src="this.product.img" width="130" height="232" alt="">
+                    <img :src="this.product.img" width="130" height="232" alt="">
+                    <img :src="this.product.img" width="130" height="232" alt="">
                 </div>
-                <img v-bind:src="this.product.img" class="main-img" alt="">
-            </div>
-            <div class="right">
-                <h2> {{ this.product.name }}</h2>
-                <div class="blocks">
-                    <h4> {{ this.product.price }} $</h4>
-                    <div class="block">
-                        <h2>size</h2>
+                <img :src="this.product.img" width="284" height="478" alt="" class="main-img">
+                <div class="about-block">
+                    <div class="info">
+                        <p>{{ this.product.name }}</p>
+                        <h3> ${{ this.product.price }}</h3>
+                    </div>
+                    <div class="size-block">
+                        <p>size</p>
                         <div class="sizes">
-                            <span>X</span>
-                            <span>M</span>
-                            <span>XL</span>
+                            <span class="size">X</span>
+                            <span class="size">M</span>
+                            <span class="size">XL</span>
                         </div>
                     </div>
-                    <div class="block in-cart-block">
-                        <div class="in-cart">
-                            <p>in cart</p>
+                    <div class="buy-block">
+                        <div class="block">
+                            <button class="buy-btn bubbly-button" @click="addToBasket"
+                            ><img src="/img/icons/cart.png" height="46" width="50"
+                                  alt=""> in cart
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="description">
-            <div class="text">
-                <h2>Description</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. <br> Accusantium aspernatur, atque beatae
-                    et ipsam
-                    reiciendis.</p>
-                <div class="benefits">
-                    <div class="benefit">
-                        <img src="/img/icons/delivery.png" alt="">
-                        <p>Delivery quality</p>
+            <div class="description">
+                <div class="text">
+                    <h2>Description</h2>
+                    <p>{{ this.product.description }}</p>
+                    <div class="benefits">
+                        <div class="benefit">
+                            <img src="/img/icons/delivery.png" alt="">
+                            <p>Delivery quality</p>
+                        </div>
+                        <div class="benefit">
+                            <img src="/img/icons/payment.png" alt="">
+                            <p>Prepayment <br>
+                                or <br>
+                                Payment upon receipt</p></div>
+                        <div class="benefit">
+                            <img src="/img/icons/cool_box.png" alt="">
+                            <p>Return back until 14 days</p>
+                        </div>
                     </div>
-                    <div class="benefit">
-                        <img src="/img/icons/payment.png" alt="">
-                        <p>Prepayment <br>
-                            or <br>
-                            Payment upon receipt</p></div>
-                    <div class="benefit">
-                        <img src="/img/icons/cool_box.png" alt="">
-                        <p>Return back until 14 days</p>
-                    </div>
-
                 </div>
             </div>
-        </div>
-        <div class="relevant">
-            <h2>RELEVANT FOR YOU</h2>
-            <div class="cards" v-if="isLoadedRelevant">
-                <product-card-component v-for="product in this.relevant" v-bind:key="product.id" :product="product"></product-card-component>
+            <div class="relevant">
+                <p>RELEVANT FOR YOU</p>
+                <div class="cards" v-if="isLoadedRelevant">
+                    <div class="out" v-for="product in this.relevant"
+                         v-bind:key="product.id">
+                        <product-card-component v-on:click.native="changeProduct"
+                                                :product="product"></product-card-component>
+                    </div>
+                </div>
             </div>
-        </div>
+        </main>
+        <LoaderComponent v-if="!isLoaded"></LoaderComponent>
         <footer-component></footer-component>
     </div>
 </template>
@@ -69,43 +74,70 @@
 import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
 import ProductCardComponent from "../components/ProductCardComponent";
+import LoaderComponent from "../components/LoaderComponent";
 
 export default {
     name: "ProductPage",
-    components: {ProductCardComponent, FooterComponent, HeaderComponent},
+    components: {LoaderComponent, ProductCardComponent, FooterComponent, HeaderComponent},
     data() {
         return {
             isLoaded: false,
             isLoadedRelevant: false,
             product: {
                 name: null,
+                description: null,
                 price: null,
-                img: null
+                img: null,
+                id: null
             },
-            id: null,
             relevant: []
         }
     },
     beforeMount() {
-        this.id = this.$route.params.id
-        axios
-            .get('/api/v1/products/' + this.id)
-            .then(
-                res => {
-                    this.product = res.data
-                    this.isLoaded = true
-                }
-            ).catch(errors => this.$router.push('/404'))
-
-        axios
-            .get('/api/v1/products/relevant')
-            .then(
-                res => {
-                    this.relevant = res.data
-                    console.log(this.relevant)
-                    this.isLoadedRelevant = true
-                }
-            ).catch(errors => console.log(errors))
+        this.loadProduct()
+        this.loadRelevantProducts()
+    },
+    methods: {
+        addToBasket() {
+            this.$store.commit('addToBasket', this.product)
+            console.log(this.$store.state.basket)
+        },
+        setLoaded() {
+            setTimeout(() => {
+                this.isLoaded = true
+            }, 500);
+        },
+        loadProduct() {
+            if (this.product.id === this.$route.params.id) {
+                return
+            }
+            this.product.id = this.$route.params.id
+            this.isLoaded = false
+            axios
+                .get('products/' + this.product.id)
+                .then(
+                    res => {
+                        this.product = res.data
+                        this.product.count = 1
+                        console.log(this.product)
+                        this.setLoaded()
+                    }
+                ).catch(errors => this.$router.push('/404'))
+        },
+        loadRelevantProducts() {
+            axios
+                .get('products/relevant')
+                .then(
+                    res => {
+                        this.relevant = res.data
+                        this.isLoadedRelevant = true
+                    }
+                ).catch(errors => console.log(errors))
+        },
+        changeProduct() {
+            this.loadProduct()
+            this.loadRelevantProducts()
+        }
     }
 }
 </script>
@@ -113,108 +145,88 @@ export default {
 <style scoped lang="scss">
 @import "resources/sass/variables";
 
-h2, h4, span, p {
+img {
+    object-fit: cover;
+}
+
+p {
     font-size: 36px;
 }
 
-.main-info, .description {
-    border-bottom: 2px solid #C4C4C4;
+main {
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.main-info {
+.content {
+    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
 
-    .left, .right {
-        flex: 1 0 50%;
-        min-height: 600px;
-    }
-
-    .right {
-        .blocks {
-            margin-right: 200px;
-            margin-left: 20px;
-            text-align: center;
-
-            h4 {
-                margin-top: 60px;
-                color: $base-color;
-            }
-
-            .block {
-                border-top: 3px solid black;
-                margin: 70px 0;
-
-                h2 {
-                    margin-top: 40px;
-                }
-            }
-
-            .sizes, .in-cart-block {
-                display: flex;
-                justify-content: center;
-            }
-        }
-
-        span {
-            display: block;
-            color: #FFFFFF;
-            background-color: black;
-            height: 61px;
-            width: 61px;
-            margin: 5px;
-        }
-
-        .in-cart {
-            margin-top: 30px;
-            width: 193px;
-            height: 66px;
-            background-color: black;
-            color: white;
-        }
-    }
-
-    .left {
+    .additional-img {
+        width: 280px;
+        height: 478px;
         display: flex;
-        justify-content: space-between;
         flex-wrap: wrap;
-        padding: 0 100px;
+        justify-content: space-between;
+        align-content: space-between;
+    }
 
-        .images {
-            height: 478px;
-            width: 280px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
+    .about-block {
+        width: 670px;
 
-            .img {
-                width: 130px;
-                height: 230px;
-                background-color: grey;
+        .info {
+            h3 {
+                text-align: center;
+                font-size: 36px;
+                margin-top: 10px;
             }
-        }
 
-        .main-img {
-            width: 280px;
-            height: 478px;
-            background-color: grey;
-            object-fit: cover;
+            padding-bottom: 60px;
+            border-bottom: 2px solid black;
         }
+    }
+
+    .size-block {
+        text-align: center;
+        font-size: 36px;
+        margin-top: 20px;
+        padding-bottom: 75px;
+        border-bottom: 2px solid black;
+
+        .sizes {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    .buy-block {
+        display: flex;
+        justify-content: center;
+        padding-top: 20px;
     }
 }
 
 .description {
-    padding: 20px 80px 90px;
+    margin-top: 40px;
+    margin-bottom: 80px;
+    border-top: 2px solid black;
+    padding: 20px 100px;
+    width: 100%;
 
-    h2 {
-        color: $base-color;
+    h2, p {
+        font-size: 36px;
     }
 
     .benefits {
         text-align: center;
         display: flex;
         justify-content: space-around;
+        flex-wrap: wrap;
 
         p {
             font-size: 24px;
@@ -234,12 +246,51 @@ h2, h4, span, p {
 }
 
 .relevant {
+    border-top: 2px solid black;
     padding: 70px 120px;
+    width: 100%;
+
+    p {
+        margin-bottom: 30px;
+    }
 
     .cards {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+
+        .out {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+        }
+    }
+}
+
+@media screen and (max-width: 1233px) {
+    .relevant {
+        padding: 20px 10px;
+    }
+
+    .additional-img, .main-img {
+        margin: 10px 0;
+    }
+    .about-block {
+        margin: 30px 0;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .about-block {
+        width: auto;
+    }
+    .description {
+        padding: 10px;
+        margin: 0;
+    }
+    p {
+        margin-left: 10px;
     }
 }
 

@@ -2,10 +2,10 @@
     <div class="content">
         <div class="left">
             <h1>SIGN IN</h1>
-            <input type="email" placeholder="email">
-            <input type="password" placeholder="password">
+            <input type="email" placeholder="email" v-model="email">
+            <input type="password" placeholder="password" v-model="password">
             <p>Forgot your password?</p>
-            <button>LOG IN</button>
+            <button v-on:click="login">LOG IN</button>
         </div>
         <div class="right">
             <div class="text">
@@ -13,25 +13,47 @@
                 <p>Don’t have an account?<br>
                     Change it now :)</p>
             </div>
-            <router-link to="/register"><button>SIGN UP</button></router-link>
+            <router-link to="/register">
+                <button>SIGN UP</button>
+            </router-link>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: "LoginPage"
+    name: "LoginPage",
+    data() {
+        return {
+            'email': '',
+            'password': ''
+        }
+    },
+    methods: {
+        login() {
+            axios
+                .post('login', {
+                    email: this.email,
+                    password: this.password
+                })
+                .then(res => {
+                    this.$store.commit('setToken', res.data.access_token)
+                    this.$router.push('/user')
+                })
+        }
+    }
 }
 </script>
 
 <style scoped lang="scss">
 
 .content {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background: #E5E5E5;
+    flex-wrap: wrap;
 }
 
 .left, .right {
@@ -99,6 +121,14 @@ button {
     height: 81px;
     border: none;
     background: conic-gradient(from 254.97deg at 99.13% 0.57%, rgba(255, 66, 100, 0.17) -189.75deg, #FF4264 32.04deg, rgba(255, 66, 100, 0.17) 170.25deg, #FF4264 392.04deg);
+}
+
+@media screen and (max-width: 500px) {
+    .left {
+        input {
+            width: 100%;
+        }
+    }
 }
 
 </style>

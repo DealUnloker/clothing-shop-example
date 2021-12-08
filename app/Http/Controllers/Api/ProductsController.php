@@ -15,7 +15,9 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        return Products::paginate(16);
+        $result = Products::paginate(12);
+        $result->withPath('/products');
+        return $result;
     }
 
     public function relevant()

@@ -20,10 +20,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="bottom">
-            <div class="left"></div>
-            <div class="right">
+            <div class="alternative">
+                <router-link to="/products">
+                    <h1>Check it out!</h1>
+                </router-link>
             </div>
         </div>
         <footer-component></footer-component>
@@ -92,4 +92,23 @@ h1, p {
         }
     }
 }
+
+.alternative{
+    display: none;
+}
+
+@media screen and (max-width: 1200px) {
+    .top{
+        .right{
+            display: none;
+        }
+    }
+
+    .alternative{
+        margin: 40px auto;
+        display: block;
+    }
+}
+
+
 </style>

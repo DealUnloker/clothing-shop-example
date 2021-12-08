@@ -2,11 +2,11 @@
     <div class="content">
         <div class="left">
             <h1>REGISTRATION</h1>
-            <input type="text" placeholder="username">
-            <input type="email" placeholder="email">
-            <input type="password" placeholder="password">
-            <input type="password" placeholder="password">
-            <button>Register me</button>
+            <input type="text" placeholder="username" v-model="username">
+            <input type="email" placeholder="email" v-model="email">
+            <input type="password" placeholder="password" v-model="password">
+            <input type="password" placeholder="repeat password">
+            <button v-on:click="register">Register me</button>
         </div>
         <div class="right">
             <div class="text">
@@ -19,18 +19,40 @@
 
 <script>
 export default {
-    name: "RegisterPage"
+    name: "RegisterPage",
+    data() {
+        return {
+            email: '',
+            username: '',
+            password: ''
+        }
+    },
+    methods: {
+        register() {
+            axios
+                .post('register', {
+                    email: this.email,
+                    username: this.username,
+                    password: this.password
+                })
+                .then(res => {
+                    this.$store.commit('setToken', res.data.access_token)
+                    this.$router.push('/user')
+                })
+        }
+    }
 }
 </script>
 
 <style scoped lang="scss">
 
 .content {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background: #E5E5E5;
+    flex-wrap: wrap;
 }
 
 .left, .right {
@@ -78,6 +100,14 @@ export default {
 
         h2 {
             font-size: 48px;
+        }
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .left {
+        input {
+            width: 100%;
         }
     }
 }
