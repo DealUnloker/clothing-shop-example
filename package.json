@@ -11,8 +11,7 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production",
-        "postinstall": "./scripts.sh"
+        "production": "mix --production"
     },
     "devDependencies": {
         "@popperjs/core": "^2.10.2",
