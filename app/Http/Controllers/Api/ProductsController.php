@@ -17,7 +17,7 @@ class ProductsController extends Controller
     {
         $result = Products::paginate(12);
         $result->withPath('/products');
-        return $result;
+        return response($result, 200);
     }
 
     public function relevant()
