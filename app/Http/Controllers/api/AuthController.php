@@ -19,7 +19,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('usertoken')->accessToken;
 
-        return response(['access_token' => $token]);
+        return response(['access_token' => $token], 200);
     }
 
     public function login(Request $request)
