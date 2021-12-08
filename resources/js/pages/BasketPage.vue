@@ -2,35 +2,48 @@
     <div>
         <HeaderComponent></HeaderComponent>
         <main>
-            <div class="content">
+            <div class="content" v-if="basket[0]">
                 <div v-for="product in basket" class="item">
                     <img :src="product.img" height="158px" width="130px" alt="">
-                    <div class="name">
-                        <p> {{ product.name }}</p>
-                    </div>
                     <div class="actions">
-                        <div class="close">
-                            <button @click="removeProduct(product.id)">X</button>
+                        <div class="top">
+                            <div class="name">
+                                <p> {{ product.name }}</p>
+                            </div>
+                            <img src="/img/icons/close_button.png" width="24" height="24"
+                                 @click="removeProduct(product.id)" class="img-btn" alt="">
                         </div>
-                        <div class="count">
-                            <button @click="decrement(product)"> -</button>
-                            <input type="text" v-model="product.count">
-                            <button @click="increment(product)"> +</button>
+                        <div class="bottom">
+                            <div class="close">
+                            </div>
+                            <div class="count">
+                                <img src="/img/icons/minus.svg" @click="decrement(product)" height="24" width="24"
+                                     alt=""
+                                     class="img-btn">
+                                <input type="text" v-model="product.count">
+                                <img src="/img/icons/plus.svg" @click="increment(product)" height="24" width="24" alt=""
+                                     class="img-btn">
+                            </div>
                         </div>
                     </div>
                 </div>
-                <button>Purchase</button>
+                <button class="buy-btn-2">Purchase</button>
+            </div>
+            <div class="warning" v-if="!basket[0]">
+                <h1>Your basket is empty!</h1>
             </div>
         </main>
+        <FooterComponent></FooterComponent>
     </div>
 </template>
 
 <script>
 import HeaderComponent from "../components/HeaderComponent";
+import FooterComponent from "../components/FooterComponent";
 
 export default {
     name: "BasketPage",
-    components: {HeaderComponent},
+    components: {FooterComponent, HeaderComponent},
     data() {
         return {
             basket: this.$store.state.basket
@@ -62,9 +75,29 @@ img {
     object-fit: cover;
 }
 
-main{
+.img-btn {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.buy-btn-2 {
+    margin: 20px;
+    border: 0;
+    background: none;
+    font-size: 36px;
+    align-self: flex-end;
+}
+
+.warning{
+    text-align: center;
+    margin: 40px;
+}
+
+main {
     display: flex;
     justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 120px);
 }
 
 .content {
@@ -78,18 +111,19 @@ main{
         height: 160px;
         margin: 20px 10px;
         display: flex;
-        align-items: center;
         width: 100%;
 
-        .name {
+        .top {
             margin: 0 10px;
+            width: 100%;
             font-size: 18px;
             align-self: flex-start;
+            display: flex;
+            justify-content: space-between;
         }
 
         .actions {
             height: 100%;
-            padding: 20px;
             text-align: right;
             display: flex;
             flex-direction: column;
@@ -98,13 +132,15 @@ main{
 
             input {
                 width: 90px;
+                text-align: center;
+                margin: 10px;
             }
         }
     }
 }
 
 @media screen and (max-width: 800px) {
-    .content{
+    .content {
         width: 100%;
     }
 }

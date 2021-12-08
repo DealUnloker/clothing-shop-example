@@ -3,7 +3,7 @@
         <div style="position: relative">
             <h1>404</h1>
             <p>Page not found</p>
-            <router-link to="/main"><img src="img/icons/hanger.png" alt=""></router-link>
+            <router-link to="/products"><img src="img/icons/hanger.png" alt=""></router-link>
         </div>
     </div>
 </template>
@@ -35,7 +35,15 @@ h1, p {
     img {
         position: absolute;
         left: 168px;
-        top: 140px;
+        top: 132px;
     }
 }
+@media screen and (max-width: 427px) {
+    .content {
+        img {
+            display: none;
+        }
+    }
+}
+
 </style>

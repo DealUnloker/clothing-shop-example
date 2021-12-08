@@ -59,6 +59,9 @@ export default {
                     this.user = res.data
                     this.setLoaded()
                 })
+                .catch(errors => {
+                    this.$router.push('/login')
+                })
         },
         setLoaded(){
             setTimeout(() => { this.isLoaded = true}, 500);

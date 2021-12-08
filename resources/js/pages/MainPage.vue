@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header-component></header-component>
+        <header-component :func="showMenu"></header-component>
         <main v-if="isLoaded">
             <div class="products">
                 <div class="out" v-for="product in this.products.data" v-bind:key="product.id">
@@ -16,6 +16,7 @@
                 <span v-if="next_page_url" @click="getResults(next_page_url)"><img src="/img/icons/r_arrow.png" alt=""></span>
             </div>
         </main>
+        <MenuComponent v-if="isShowMenu"></MenuComponent>
         <LoaderComponent v-if="!isLoaded"></LoaderComponent>
         <footer-component></footer-component>
     </div>
@@ -26,10 +27,12 @@ import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
 import ProductCardComponent from "../components/ProductCardComponent";
 import LoaderComponent from "../components/LoaderComponent";
+import MenuComponent from "../components/MenuComponent";
 
 export default {
     name: "MainPage",
     components: {
+        MenuComponent,
         LoaderComponent,
         HeaderComponent,
         FooterComponent,
@@ -41,7 +44,8 @@ export default {
             prev_page_url: null,
             next_page_url: null,
             links: [],
-            isLoaded: false
+            isLoaded: false,
+            isShowMenu: false
         }
     },
     created() {
@@ -66,6 +70,15 @@ export default {
             setTimeout(() => {
                 this.isLoaded = true
             }, 100);
+        },
+        showMenu(){
+            this.isShowMenu = true
+            setTimeout( () => {
+                this.hideMenu()
+            }, 2000)
+        },
+        hideMenu(){
+            this.isShowMenu = false
         }
     }
 }

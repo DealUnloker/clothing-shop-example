@@ -17,6 +17,6 @@ class OrderController extends Controller
             'products' => json_encode($request->json)
         ]);
 
-        return $order;
+        return response($order, 200);
     }
 }

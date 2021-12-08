@@ -268,6 +268,8 @@ main {
     }
 }
 
+
+
 @media screen and (max-width: 1233px) {
     .relevant {
         padding: 20px 10px;

@@ -4,7 +4,7 @@
             <h1 class="m-title">EUCLID</h1>
         </router-link>
         <div class="content">
-            <div class="filter">
+            <div class="filter" v-on:click="func">
                 <div class="line"></div>
                 <div class="line"></div>
                 <div class="line"></div>
@@ -27,6 +27,13 @@
 
 <script>
 export default {
+    props: {
+        'func': {
+            default: function () {
+                return { message: 'hello' }
+            }
+        }
+    },
     name: "HeaderComponent"
 }
 </script>
