@@ -19,8 +19,14 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->text('img');
             $table->float('price');
-            $table->foreignIdFor(\App\Models\Sizes::class);
+            $table->boolean('hasXS')->default(false);
+            $table->boolean('hasS')->default(false);
+            $table->boolean('hasM')->default(false);
+            $table->boolean('hasL')->default(false);
+            $table->boolean('hasXL')->default(false);
+            $table->boolean('hasXXL')->default(false);
             $table->foreignIdFor(\App\Models\Genders::class);
+            $table->foreignIdFor(\App\Models\ProductType::class);
             $table->timestamps();
         });
     }

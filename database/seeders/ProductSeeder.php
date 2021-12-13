@@ -20,10 +20,12 @@ class ProductSeeder extends Seeder
         DB::table('products')->insert([
             'name' => Str::random(10),
             'description' => Str::random(30),
-            'img' => "https://preview.redd.it/wa3xbqc26zf51.jpg?width=640&crop=smart&auto=webp&s=7a841b1b4aad55aceb2c5c465af15642563ed063",
+            'img' => "https://i.pinimg.com/564x/42/3b/05/423b0525e4aeb7c21246c3c47836a117.jpg",
             'price' => mt_rand(0, 1000),
-            'sizes_id' => mt_rand(0, 6),
-            'genders_id' => mt_rand(0, 2),
+            "hasL" => true,
+            "hasXL" => true,
+            'genders_id' => mt_rand(0, 3),
+            'product_type_id' => mt_rand(0, 8),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);

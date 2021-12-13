@@ -13,10 +13,21 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $result = Products::paginate(12);
+        $productsQuery = Products::query();
+
+        if ($request->filled('gender_id')){
+            $productsQuery->where('genders_id', $request->gender_id);
+        }
+
+        if($request->filled('type_id')){
+            $productsQuery->where('product_type_id', $request->type_id);
+        }
+
+        $result = $productsQuery->paginate(12);
         $result->withPath('/products');
+
         return response($result, 200);
     }
 

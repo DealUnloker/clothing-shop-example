@@ -4,8 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
-class GendersSeeder extends Seeder
+class ProductTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,12 +15,8 @@ class GendersSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('genders')->insert([[
-            'name' => "All"
-        ],[
-            'name' => "Male",
-        ], [
-            'name' => "Female",
-        ]]);
+        DB::table('product_types')->insert([
+            'name' => Str::random(5),
+        ]);
     }
 }

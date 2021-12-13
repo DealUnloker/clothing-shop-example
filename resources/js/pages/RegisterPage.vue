@@ -36,7 +36,7 @@ export default {
                     password: this.password
                 })
                 .then(res => {
-                    this.$store.commit('setToken', res.data.access_token)
+                    this.$store.dispatch('auth/setNewToken', res.data.access_token)
                     this.$router.push('/user')
                 })
         }

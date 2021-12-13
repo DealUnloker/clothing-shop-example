@@ -18,52 +18,55 @@
                     <div class="size-block">
                         <p>size</p>
                         <div class="sizes">
-                            <span class="size">X</span>
-                            <span class="size">M</span>
-                            <span class="size">XL</span>
+                            <span class="size" v-if="this.product.hasXS">XS</span>
+                            <span class="size" v-if="this.product.hasS">S</span>
+                            <span class="size" v-if="this.product.hasM">M</span>
+                            <span class="size" v-if="this.product.hasL">L</span>
+                            <span class="size" v-if="this.product.hasXL">XL</span>
+                            <span class="size" v-if="this.product.hasXXL">XXL</span>
                         </div>
                     </div>
-                    <div class="buy-block">
-                        <div class="block">
-                            <button class="buy-btn bubbly-button" @click="addToBasket"
-                            ><img src="/img/icons/cart.png" height="46" width="50"
-                                  alt=""> in cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="description">
-                <div class="text">
-                    <h2>Description</h2>
-                    <p>{{ this.product.description }}</p>
-                    <div class="benefits">
-                        <div class="benefit">
-                            <img src="/img/icons/delivery.png" alt="">
-                            <p>Delivery quality</p>
-                        </div>
-                        <div class="benefit">
-                            <img src="/img/icons/payment.png" alt="">
-                            <p>Prepayment <br>
-                                or <br>
-                                Payment upon receipt</p></div>
-                        <div class="benefit">
-                            <img src="/img/icons/cool_box.png" alt="">
-                            <p>Return back until 14 days</p>
+                    <div class=" buy-block">
+                            <div class="block">
+                                <button class="buy-btn bubbly-button" @click="addToBasket"
+                                ><img src="/img/icons/cart.png" height="46" width="50"
+                                      alt=""> in cart
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="relevant">
-                <p>RELEVANT FOR YOU</p>
-                <div class="cards" v-if="isLoadedRelevant">
-                    <div class="out" v-for="product in this.relevant"
-                         v-bind:key="product.id">
-                        <product-card-component v-on:click.native="changeProduct"
-                                                :product="product"></product-card-component>
+                <div class="description">
+                    <div class="text">
+                        <h2>Description</h2>
+                        <p>{{ this.product.description }}</p>
+                        <div class="benefits">
+                            <div class="benefit">
+                                <img src="/img/icons/delivery.png" alt="">
+                                <p>Delivery quality</p>
+                            </div>
+                            <div class="benefit">
+                                <img src="/img/icons/payment.png" alt="">
+                                <p>Prepayment <br>
+                                    or <br>
+                                    Payment upon receipt</p></div>
+                            <div class="benefit">
+                                <img src="/img/icons/cool_box.png" alt="">
+                                <p>Return back until 14 days</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="relevant">
+                    <p>RELEVANT FOR YOU</p>
+                    <div class="cards" v-if="isLoadedRelevant">
+                        <div class="out" v-for="product in this.relevant"
+                             v-bind:key="product.id">
+                            <product-card-component v-on:click.native="changeProduct"
+                                                    :product="product"></product-card-component>
+                        </div>
+                    </div>
+                </div>
         </main>
         <LoaderComponent v-if="!isLoaded"></LoaderComponent>
         <footer-component></footer-component>
@@ -105,7 +108,7 @@ export default {
         setLoaded() {
             setTimeout(() => {
                 this.isLoaded = true
-            }, 500);
+            }, 0);
         },
         loadProduct() {
             if (this.product.id === this.$route.params.id) {
@@ -220,6 +223,7 @@ main {
 
     h2, p {
         font-size: 36px;
+        word-wrap: break-word;
     }
 
     .benefits {
@@ -227,6 +231,7 @@ main {
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
+        word-wrap: break-word;
 
         p {
             font-size: 24px;
@@ -267,7 +272,6 @@ main {
         }
     }
 }
-
 
 
 @media screen and (max-width: 1233px) {

@@ -20,7 +20,7 @@
                                 <img src="/img/icons/minus.svg" @click="decrement(product)" height="24" width="24"
                                      alt=""
                                      class="img-btn">
-                                <input type="text" v-model="product.count">
+                                <input type="number" v-model="product.count">
                                 <img src="/img/icons/plus.svg" @click="increment(product)" height="24" width="24" alt=""
                                      class="img-btn">
                             </div>
@@ -108,6 +108,9 @@ main {
     flex-direction: column;
     align-items: center;
     width: 800px;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px;
 
     .item {
         height: 160px;
@@ -136,6 +139,11 @@ main {
                 width: 90px;
                 text-align: center;
                 margin: 10px;
+            }
+
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
             }
         }
     }

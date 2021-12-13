@@ -27,6 +27,7 @@ import FooterComponent from "../components/FooterComponent";
 import ProductCardComponent from "../components/ProductCardComponent";
 import LoaderComponent from "../components/LoaderComponent";
 import MenuComponent from "../components/MenuComponent";
+import {mapGetters} from "vuex";
 
 export default {
     name: "MainPage",
@@ -46,6 +47,22 @@ export default {
             isLoaded: false,
         }
     },
+    computed: {
+        ...mapGetters({
+            "getGender": "filter/getGender",
+            "getType": "filter/getType",
+            "getProductsQuery": "filter/getQuery"
+        })
+    },
+
+    watch: {
+        getGender(n, o){
+            this.getResults('products')
+        },
+        getType(n, o){
+            this.getResults('products')
+        }
+    },
     created() {
         this.getResults('products')
     },
@@ -53,7 +70,9 @@ export default {
         getResults(link) {
             this.isLoaded = false
             axios
-                .get(link)
+                .get(link, {
+                    params: this.getProductsQuery
+                })
                 .then(response => {
                     this.products = response.data;
                     console.log(response.data)
@@ -67,7 +86,7 @@ export default {
             window.scrollTo(0, 0);
             setTimeout(() => {
                 this.isLoaded = true
-            }, 100);
+            }, 0);
         }
     }
 }

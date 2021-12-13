@@ -21,7 +21,7 @@ export default {
             state.basket = state.basket.filter(product => product.id !== id)
         },
         increment(state, product) {
-            product.count += 1
+            product.count = parseInt(product.count) + 1
         },
         decrement(state, product) {
             if (product.count >= 2) {

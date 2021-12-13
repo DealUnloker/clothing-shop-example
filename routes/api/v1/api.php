@@ -21,4 +21,5 @@ Route::post('login', [\App\Http\Controllers\api\AuthController::class, 'login'])
 Route::post('register', [\App\Http\Controllers\api\AuthController::class, 'register']);
 Route::get('products/relevant', [\App\Http\Controllers\api\ProductsController::class, 'relevant']);
 Route::resource('products', \App\Http\Controllers\api\ProductsController::class);
+Route::get('product_types', [\App\Http\Controllers\api\TypeController::class,  'index']);
 
