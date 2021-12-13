@@ -99,7 +99,7 @@ export default {
     },
     methods: {
         addToBasket() {
-            this.$store.commit('addToBasket', this.product)
+            this.$store.commit('basket/ADD_TO_BASKET', this.product)
             console.log(this.$store.state.basket)
         },
         setLoaded() {

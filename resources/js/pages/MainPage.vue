@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header-component :func="showMenu"></header-component>
+        <header-component></header-component>
         <main v-if="isLoaded">
             <div class="products">
                 <div class="out" v-for="product in this.products.data" v-bind:key="product.id">
@@ -16,7 +16,6 @@
                 <span v-if="next_page_url" @click="getResults(next_page_url)"><img src="/img/icons/r_arrow.png" alt=""></span>
             </div>
         </main>
-        <MenuComponent v-if="isShowMenu"></MenuComponent>
         <LoaderComponent v-if="!isLoaded"></LoaderComponent>
         <footer-component></footer-component>
     </div>
@@ -45,7 +44,6 @@ export default {
             next_page_url: null,
             links: [],
             isLoaded: false,
-            isShowMenu: false
         }
     },
     created() {
@@ -70,15 +68,6 @@ export default {
             setTimeout(() => {
                 this.isLoaded = true
             }, 100);
-        },
-        showMenu(){
-            this.isShowMenu = true
-            setTimeout( () => {
-                this.hideMenu()
-            }, 2000)
-        },
-        hideMenu(){
-            this.isShowMenu = false
         }
     }
 }

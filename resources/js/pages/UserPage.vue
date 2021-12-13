@@ -18,7 +18,7 @@
                 </tr>
                 </tbody>
             </table>
-            <button class="auth-btn" @click="logout">Logout</button>
+            <button class="auth-btn" @click="logoutUser">Logout</button>
         </div>
         <FooterComponent v-if="isLoaded"></FooterComponent>
         <LoaderComponent v-if="!isLoaded"></LoaderComponent>
@@ -29,6 +29,7 @@
 import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
 import LoaderComponent from "../components/LoaderComponent";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: "UserPage",
@@ -40,15 +41,15 @@ export default {
         }
     },
     beforeMount() {
-        if (!this.$store.state.token) {
+        if (!this.isAuth()) {
             this.$router.push('/login')
         } else {
             this.loadUserData()
         }
     },
     methods: {
-        logout() {
-            this.$store.commit('removeToken')
+        logoutUser() {
+            this.logout()
             this.$router.push('/')
         },
         loadUserData() {
@@ -63,9 +64,17 @@ export default {
                     this.$router.push('/login')
                 })
         },
-        setLoaded(){
-            setTimeout(() => { this.isLoaded = true}, 500);
-        }
+        setLoaded() {
+            setTimeout(() => {
+                this.isLoaded = true
+            }, 0);
+        },
+        ...mapGetters({
+            isAuth: "auth/isAuth"
+        }),
+        ...mapActions({
+            logout: "auth/logout"
+        })
     }
 }
 </script>

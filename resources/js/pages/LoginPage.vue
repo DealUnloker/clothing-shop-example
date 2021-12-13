@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
     name: "LoginPage",
     data() {
@@ -30,6 +32,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions({
+           setNewToken: "auth/setNewToken"
+        }),
         login() {
             axios
                 .post('login', {
@@ -37,7 +42,7 @@ export default {
                     password: this.password
                 })
                 .then(res => {
-                    this.$store.commit('setToken', res.data.access_token)
+                    this.setNewToken(res.data.access_token)
                     this.$router.push('/user')
                 })
         }

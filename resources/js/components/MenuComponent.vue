@@ -34,6 +34,11 @@
                 <p>Clothes type</p>
             </div>
         </div>
+        <div class="actions">
+            <div class="block">
+                <h1>RESET</h1>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -52,20 +57,26 @@ h1, p {
 .menu {
     position: absolute;
     width: 400px;
-    min-height: 100vh;
     background-color: white;
-    left: 0;
-    top: 0;
-    .top{
+    left: 10px;
+    top: 120px;
+    display: flex;
+    border: 2px solid black;
+    flex-direction: column;
+    border-radius: 10px;
+
+    .top, .actions {
         display: flex;
         justify-content: space-around;
         align-items: center;
         height: 60px;
-        .separator{
+
+        .separator {
             height: 100%;
             border-right: 1px solid black;
         }
     }
+
     .bottom {
         .block {
             padding: 20px;
@@ -126,6 +137,16 @@ h1, p {
     }
     100% {
         -webkit-transform: translateX(0%);
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .menu {
+        left: 0;
+        top: 163px;
+        width: 100vw;
+        min-width: 320px;
+        min-height: calc(100vh - 163px);
     }
 }
 

@@ -2,8 +2,8 @@
     <div>
         <HeaderComponent></HeaderComponent>
         <main>
-            <div class="content" v-if="basket[0]">
-                <div v-for="product in basket" class="item">
+            <div class="content" v-if="!isBasketEmpty">
+                <div v-for="product in products" :key="product.id" class="item">
                     <img :src="product.img" height="158px" width="130px" alt="">
                     <div class="actions">
                         <div class="top">
@@ -29,7 +29,7 @@
                 </div>
                 <button class="buy-btn-2">Purchase</button>
             </div>
-            <div class="warning" v-if="!basket[0]">
+            <div class="warning" v-if="isBasketEmpty">
                 <h1>Your basket is empty!</h1>
             </div>
         </main>
@@ -40,31 +40,33 @@
 <script>
 import HeaderComponent from "../components/HeaderComponent";
 import FooterComponent from "../components/FooterComponent";
+import {mapGetters, mapMutations} from "vuex";
 
 export default {
     name: "BasketPage",
     components: {FooterComponent, HeaderComponent},
-    data() {
-        return {
-            basket: this.$store.state.basket
-        }
+    computed: {
+        ...mapGetters({
+            products: 'basket/allProducts',
+            isBasketEmpty: 'basket/isBasketEmpty'
+        })
     },
     methods: {
+        ...mapMutations({
+            "increment_count": "basket/increment",
+            "decrement_count": "basket/decrement",
+            "remove_from_basket": "basket/REMOVE_FROM_BASKET"
+        }),
         increment(product) {
-            product.count += 1
-            this.$store.commit('saveBasket')
+            this.increment_count(product)
+            this.$forceUpdate()
         },
         decrement(product) {
-            product.count -= 1
-            this.$store.commit('saveBasket')
+            this.decrement_count(product)
+            this.$forceUpdate()
         },
-        showBasket() {
-            console.log(this.basket)
-        },
-        removeProduct(id) {
-            this.basket = this.basket.filter(product => product.id !== id)
-            this.$store.state.basket = this.basket
-            this.$store.commit('saveBasket')
+        removeProduct(product_id) {
+            this.remove_from_basket(product_id)
         }
     }
 }
@@ -88,7 +90,7 @@ img {
     align-self: flex-end;
 }
 
-.warning{
+.warning {
     text-align: center;
     margin: 40px;
 }
