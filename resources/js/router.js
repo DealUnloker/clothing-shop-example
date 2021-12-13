@@ -7,7 +7,6 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import UserPage from "./pages/UserPage";
 import BasketPage from "./pages/BasketPage";
-import TestPage from "./pages/TestPage";
 
 
 export default new VueRouter({
@@ -40,10 +39,6 @@ export default new VueRouter({
         {
             path: '/basket',
             component: BasketPage
-        },
-        {
-            path: '/test',
-            component: TestPage
         },
         {
             path: '*',
