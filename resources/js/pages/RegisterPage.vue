@@ -2,10 +2,11 @@
     <div class="content">
         <div class="left">
             <h1>REGISTRATION</h1>
-            <input type="text" placeholder="username" v-model="username">
+            <input type="text" placeholder="first name" v-model="first_name">
+            <input type="text" placeholder="second name" v-model="second_name">
             <input type="email" placeholder="email" v-model="email">
             <input type="password" placeholder="password" v-model="password">
-            <input type="password" placeholder="repeat password">
+            <input type="password" placeholder="repeat password" v-model="password">
             <button v-on:click="register">Register me</button>
         </div>
         <div class="right">
@@ -23,7 +24,8 @@ export default {
     data() {
         return {
             email: '',
-            username: '',
+            first_name: '',
+            second_name: '',
             password: ''
         }
     },
@@ -32,7 +34,8 @@ export default {
             axios
                 .post('register', {
                     email: this.email,
-                    username: this.username,
+                    first_name: this.first_name,
+                    second_name: this.second_name,
                     password: this.password
                 })
                 .then(res => {

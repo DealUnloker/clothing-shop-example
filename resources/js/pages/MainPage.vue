@@ -68,6 +68,7 @@ export default {
     },
     methods: {
         getResults(link) {
+            if (!link) return
             this.isLoaded = false
             axios
                 .get(link, {
@@ -120,6 +121,7 @@ main {
 .pages {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     font-size: 24px;
     margin: 90px 0;
 

@@ -12,7 +12,7 @@
             </div>
             <div class="right">
                 <router-link to="/products">
-                <div id="parallelogram"></div>
+                    <div id="parallelogram"></div>
                 </router-link>
                 <div class="centered-text">
                     <div>
@@ -38,6 +38,13 @@ export default {
     name: "WelcomePage",
     components: {
         FooterComponent
+    },
+    beforeMount() {
+        if (!localStorage.first_time) {
+            localStorage.setItem('first_time', "true")
+        } else {
+            this.$router.push('products')
+        }
     }
 }
 </script>
@@ -93,18 +100,18 @@ h1, p {
     }
 }
 
-.alternative{
+.alternative {
     display: none;
 }
 
 @media screen and (max-width: 1200px) {
-    .top{
-        .right{
+    .top {
+        .right {
             display: none;
         }
     }
 
-    .alternative{
+    .alternative {
         margin: 40px auto;
         display: block;
     }

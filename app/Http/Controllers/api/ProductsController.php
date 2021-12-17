@@ -33,7 +33,7 @@ class ProductsController extends Controller
 
     public function relevant()
     {
-        return Products::inRandomOrder()->limit(4)->get();
+        return response(Products::inRandomOrder()->limit(4)->get(), 200);
     }
 
     /**

@@ -21,7 +21,7 @@
             </div>
 
             <div class="menu">
-                <router-link to="/user"><img src="/img/icons/user_log.png" height="54" width="54" alt=""></router-link>
+                <router-link :to=" isAuth ? '/user' : '/login'"><img src="/img/icons/user_log.png" height="54" width="54" alt=""></router-link>
                 <router-link to="/basket"><img src="/img/icons/black_cart.png" height="54" width="54" alt=""
                                                style="margin-left: 40px"></router-link>
             </div>
@@ -32,6 +32,7 @@
 
 <script>
 import MenuComponent from "./MenuComponent";
+import {mapGetters} from "vuex";
 
 export default {
     components: {MenuComponent},
@@ -40,6 +41,11 @@ export default {
         return {
             isShowMenu: false
         }
+    },
+    computed: {
+       ...mapGetters({
+           "isAuth": "auth/isAuth"
+       })
     },
     methods: {
         toggleMenu() {

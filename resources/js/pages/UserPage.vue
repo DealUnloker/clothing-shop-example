@@ -2,23 +2,51 @@
     <div>
         <HeaderComponent></HeaderComponent>
         <div class="content" v-if="isLoaded">
-            <table class="table table-hover table-dark">
-                <tbody>
-                <tr>
-                    <td>Your nickname</td>
-                    <td>{{ user.name }}</td>
-                </tr>
-                <tr>
-                    <td>Your email</td>
-                    <td>{{ user.email }}</td>
-                </tr>
-                <tr>
-                    <td>Your id</td>
-                    <td>{{ user.id }}</td>
-                </tr>
-                </tbody>
-            </table>
-            <button class="auth-btn" @click="logoutUser">Logout</button>
+
+            <div class="block">
+                <div class="top">
+                    <h1>Your name</h1>
+                </div>
+                <div class="bottom">
+                    <input type="text" :placeholder="user.name">
+                    <button>Change</button>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="top">
+                    <h1>Your second name</h1>
+                </div>
+                <div class="bottom">
+                    <input type="text" :placeholder="user.name">
+                    <button>Change</button>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="top">
+                    <h1>Your email</h1>
+                </div>
+                <div class="bottom">
+                    <input type="text" :placeholder="user.name">
+                    <button>Change</button>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="top">
+                    <h1>Your address</h1>
+                </div>
+                <div class="bottom">
+                    <input type="text" :placeholder="user.name">
+                    <button>Change</button>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button class="auth-btn" @click="logoutUser">Logout</button>
+                <button class="auth-btn" @click="">Admin</button>
+            </div>
         </div>
         <FooterComponent v-if="isLoaded"></FooterComponent>
         <LoaderComponent v-if="!isLoaded"></LoaderComponent>
@@ -80,9 +108,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .content {
     margin: auto;
-    height: 400px;
+    min-height: 400px;
+    padding: 40px 0;
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -91,6 +121,42 @@ export default {
 
     .auth-btn {
         margin-top: 40px;
+    }
+
+    .block {
+        p {
+            font-size: 36px;
+        }
+
+        display: flex;
+        flex-direction: column;
+        width: 600px;
+        height: 150px;
+        justify-content: center;
+        align-items: flex-start;
+        border: 2px solid black;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 20px;
+
+        .bottom {
+            margin-top: 20px;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+
+            input {
+                width: 240px;
+            }
+
+            button {
+                height: 30px;
+                width: 80px;
+                border: none;
+                background-color: red;
+                color: white;
+            }
+        }
     }
 }
 </style>

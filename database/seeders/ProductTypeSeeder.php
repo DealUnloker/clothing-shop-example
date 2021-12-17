@@ -15,8 +15,10 @@ class ProductTypeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('product_types')->insert([
-            'name' => Str::random(5),
-        ]);
+        DB::table('product_types')->insert([[
+            'name' => "Зимняя куртка",
+        ], [
+
+        ]]);
     }
 }
