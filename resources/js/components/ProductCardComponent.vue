@@ -35,10 +35,12 @@ h3, p {
 
 .product-card-body {
     height: 555px;
+    width: 285px;
     display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
+    text-align: center;
 
     img {
         width: 284px;

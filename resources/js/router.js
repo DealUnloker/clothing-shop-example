@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import UserPage from "./pages/UserPage";
 import BasketPage from "./pages/BasketPage";
+import AdminPage from "./pages/AdminPage";
 
 
 export default new VueRouter({
@@ -39,6 +40,17 @@ export default new VueRouter({
         {
             path: '/basket',
             component: BasketPage
+        },
+        {
+            path: '/admin',
+            component: AdminPage,
+            children: [
+                {
+                    path: "cringe",
+                    component: AdminPage
+                }
+            ]
+
         },
         {
             path: '*',

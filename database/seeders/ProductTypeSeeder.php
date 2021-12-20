@@ -16,9 +16,21 @@ class ProductTypeSeeder extends Seeder
     public function run()
     {
         DB::table('product_types')->insert([[
-            'name' => "Зимняя куртка",
+            'name' => "Sweater",
         ], [
-
+            'name' => "Dress",
+        ], [
+            'name' => "T-shirt",
+        ], [
+            'name' => "Shorts",
+        ], [
+            'name' => "Skirt",
+        ], [
+            'name' => "Jeans",
+        ], [
+            'name' => "Coat",
+        ], [
+            'name' => "Suit"
         ]]);
     }
 }

@@ -17,6 +17,7 @@ class UpdateUsersTable extends Migration
             $table->dropColumn('name');
             $table->string('first_name')->nullable();
             $table->string('second_name')->nullable();
+            $table->text('address')->nullable();
             $table->boolean('isAdmin')->default(false);
         });
     }
