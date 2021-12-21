@@ -8,8 +8,7 @@
                     <h1>Your name</h1>
                 </div>
                 <div class="bottom">
-                    <input type="text" :placeholder="user.name">
-                    <button>Change</button>
+                    <input type="text" class="form__input" id="first_name" v-model="user.first_name" required=""/>
                 </div>
             </div>
 
@@ -18,8 +17,7 @@
                     <h1>Your second name</h1>
                 </div>
                 <div class="bottom">
-                    <input type="text" :placeholder="user.name">
-                    <button>Change</button>
+                    <input type="text" class="form__input" id="second_name" v-model="user.second_name" required=""/>
                 </div>
             </div>
 
@@ -28,8 +26,7 @@
                     <h1>Your email</h1>
                 </div>
                 <div class="bottom">
-                    <input type="text" :placeholder="user.name">
-                    <button>Change</button>
+                    <input type="text" class="form__input" id="email" v-model="user.email" required=""/>
                 </div>
             </div>
 
@@ -38,14 +35,14 @@
                     <h1>Your address</h1>
                 </div>
                 <div class="bottom">
-                    <input type="text" :placeholder="user.name">
-                    <button>Change</button>
+                    <input type="text" class="form__input" id="address" v-model="user.address" required=""/>
                 </div>
             </div>
 
             <div class="buttons">
+                <button class="auth-btn" @click="changeData">Submit changes</button>
                 <button class="auth-btn" @click="logoutUser">Logout</button>
-                <button class="auth-btn" @click="">Admin</button>
+                <button class="auth-btn" @click="goToAdminPanel" v-if="user.isAdmin">Admin</button>
             </div>
         </div>
         <FooterComponent v-if="isLoaded"></FooterComponent>
@@ -92,6 +89,19 @@ export default {
                     this.$router.push('/login')
                 })
         },
+        changeData(){
+            axios.post('update_user', {
+                address: this.user.address,
+                email: this.user.email,
+                first_name: this.user.first_name,
+                second_name: this.user.second_name
+            }).then(res =>
+                console.log(res)
+            );
+        },
+        goToAdminPanel(){
+            this.$router.push('/admin')
+        },
         setLoaded() {
             setTimeout(() => {
                 this.isLoaded = true
@@ -119,6 +129,11 @@ export default {
     justify-content: center;
     align-items: center;
 
+    .buttons{
+        display: flex;
+        flex-direction: column;
+    }
+
     .auth-btn {
         margin-top: 40px;
     }
@@ -131,7 +146,7 @@ export default {
         display: flex;
         flex-direction: column;
         width: 600px;
-        height: 150px;
+        height: 200px;
         justify-content: center;
         align-items: flex-start;
         border: 2px solid black;
@@ -147,16 +162,29 @@ export default {
 
             input {
                 width: 240px;
+                height: 50px;
+                color: #333;
+                font-size: 1.2rem;
+                padding: 1.5rem 2rem;
+                border-radius: 0.2rem;
+                background-color: rgb(255, 255, 255);
+                border: none;
+                display: block;
+                border-bottom: 0.3rem solid transparent;
+                transition: all 0.3s;
             }
 
             button {
-                height: 30px;
+                height: 50px;
                 width: 80px;
                 border: none;
-                background-color: red;
                 color: white;
+                background: conic-gradient(from 254.97deg at 99.13% 0.57%, rgba(255, 66, 100, 0.17) -189.75deg, #FF4264 32.04deg, rgba(255, 66, 100, 0.17) 170.25deg, #FF4264 392.04deg);
+
             }
         }
     }
 }
+
+
 </style>

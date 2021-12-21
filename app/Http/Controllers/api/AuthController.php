@@ -41,4 +41,16 @@ class AuthController extends Controller
     {
         return response(Auth::user(), 200);
     }
+
+    public function update_user(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+        $data = $request->only(['address', 'email', 'first_name', 'second_name']);
+        $user->address = $data['address'];
+        $user->email = $data['email'];
+        $user->first_name = $data['first_name'];
+        $user->second_name = $data['second_name'];
+        $user->save();
+        return $user;
+    }
 }

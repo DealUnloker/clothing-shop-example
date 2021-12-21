@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="buy-btn-2">Purchase</button>
+                <button class="buy-btn-2" @click="buy">Purchase</button>
             </div>
             <div class="warning" v-if="isBasketEmpty">
                 <h1>Your basket is empty!</h1>
@@ -67,6 +67,14 @@ export default {
         },
         removeProduct(product_id) {
             this.remove_from_basket(product_id)
+        },
+        buy(){
+            axios
+                .post('order/add',
+                    {
+                        products: this.products
+                    })
+                .then(res => console.log(res))
         }
     }
 }

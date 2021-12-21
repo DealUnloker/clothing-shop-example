@@ -15,15 +15,11 @@ class UserIsAdmin
      * @param  \Closure  $next
      * @return mixed
      */
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
 
     public function handle(Request $request, Closure $next)
     {
         if (!Auth::user()->isAdmin) {
-            return redirect('/');
+            return response("You are not Admin", 401);
         }
 
         return $next($request);
